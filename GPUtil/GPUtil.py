@@ -33,7 +33,7 @@ from typing import List
 from distutils import spawn
 
 
-__version__ = "1.5.2"
+__version__ = "1.5.3"
 
 
 class GPU:
@@ -454,7 +454,7 @@ def showUtilization(all=False, attrList=None, useOldCode=False):
                 " ID | Name | Serial | UUID || GPU util. | Memory util. || Memory total | Memory used | Memory free || Display mode | Display active || Core Clock | Memory Clock || Fan Speed | Power draw || Compute Mode || PCI Id"
             )
             print(
-                "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
             )
             for gpu in GPUs:
                 print(

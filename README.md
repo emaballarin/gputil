@@ -186,6 +186,7 @@ Helper class handle the attributes of each GPU. Quoted descriptions are copied f
   * `power_limit` - "Max power that the GPU can consume."
   * `core_clock` - "Current core clock."
   * `memory_clock` - "Current memory clock."
+  * `compute_mode` - "Wether the device is in compute mode."
   * `pci_id` - "PCI ID associated to the device."
 
 ```python
