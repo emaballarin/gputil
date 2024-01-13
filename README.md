@@ -1,5 +1,5 @@
 # GPUtil
-`GPUtil` is a Python module for getting the GPU status from NVIDA GPUs using `nvidia-smi`.
+`GPUtil` is a Python module for getting the GPU status from NVIDIA GPUs using `nvidia-smi`.
 `GPUtil` locates all GPUs on the computer, determines their availablity and returns a ordered list of available GPUs.
 Availablity is based upon the current memory consumption and load of each GPU.
 The module is written with GPU selection for Deep Learning in mind, but it is not task/library specific and it can be applied to any task, where it may be useful to identify available GPUs.
@@ -68,7 +68,7 @@ Tested on CUDA driver version 390.77 Python 2.7 and 3.5.
       export PYTHONPATH="$PYTHONPATH:<path_to_gputil>"
 
       Example:
-      export PYTHONPATH="$PYTHONPATH:/home/anderskm/github/gputil"
+      export PYTHONPATH="$PYTHONPATH:/home/emaballarin/github/gputil"
       ```
    4. Save ~/.bashrc and close gedit
    5. Restart your terminal
@@ -180,6 +180,13 @@ Helper class handle the attributes of each GPU. Quoted descriptions are copied f
   * `serial` - This number matches the serial number physically printed on each board. It is a globally unique immutable alphanumeric value.
   * `display_mode` - "A flag that indicates whether a physical display (e.g. monitor) is currently connected to any of the GPU's connectors. "Enabled" indicates an attached display. "Disabled" indicates otherwise."
   * `display_active` - "A flag that indicates whether a display is initialized on the GPU's (e.g. memory is allocated on the device for display). Display can be active even when no monitor is physically attached. "Enabled" indicates an active display. "Disabled" indicates otherwise."
+  * `vbios_version` - "Bios version installed on the GPU."
+  * `fan_speed` - "Current fan speed."
+  * `power_draw` - "Current consumption of the GPU. The value is expressed in Watt."
+  * `power_limit` - "Max power that the GPU can consume."
+  * `core_clock` - "Current core clock."
+  * `memory_clock` - "Current memory clock."
+  * `pci_id` - "PCI ID associated to the device."
 
 ```python
 GPUs = GPUtil.getGPUs()
@@ -205,7 +212,7 @@ Given a list of `GPUs` (see `GPUtil.getGPUs()`), return a equally sized list of 
   * GPUavailability - binary list indicating if `GPUs` are available or not. A GPU is considered available, if the current load and memory usage is less than `maxLoad` and `maxMemory`, respectively.
 
 
-See [demo_GPUtil.py](https://github.com/anderskm/gputil/blob/master/demo_GPUtil.py) for examples and more details.
+See [demo_GPUtil.py](https://github.com/emaballarin/gputil/blob/master/demo_GPUtil.py) for examples and more details.
 
 ## Examples
 
@@ -364,23 +371,23 @@ a+b=42
 If using GPUtil to monitor GPUs during training, it may show 0% utilization. A way around this is to use a separate monitoring thread.
 ```python
 import GPUtil
-from threading import Thread
+from threading import Thread, Event
 import time
 
 class Monitor(Thread):
     def __init__(self, delay):
         super(Monitor, self).__init__()
-        self.stopped = False
+        self.stopped = Event()
         self.delay = delay # Time between calls to GPUtil
         self.start()
 
     def run(self):
-        while not self.stopped:
+        while not self.stopped.is_set():
             GPUtil.showUtilization()
             time.sleep(self.delay)
 
     def stop(self):
-        self.stopped = True
+        self.stopped.set()
         
 # Instantiate monitor with a 10-second delay between updates
 monitor = Monitor(10)
@@ -392,4 +399,4 @@ monitor.stop()
 ```
 
 ## License
-See [LICENSE](https://github.com/anderskm/gputil/blob/master/LICENSE.txt)
+See [LICENSE](https://github.com/emaballarin/gputil/blob/master/LICENSE)

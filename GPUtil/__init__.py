@@ -1,33 +1,31 @@
+# /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# ──────────────────────────────────────────────────────────────────────────────
 # GPUtil - GPU utilization
 #
-# A Python module for programmically getting the GPU utilization from NVIDA GPUs using nvidia-smi
+# A Python module for programmically getting the GPU utilization from NVIDIA
+# GPUs using `nvidia-smi`.
 #
-# Author: Anders Krogh Mortensen (anderskm)
-# Date:   16 January 2017
-# Web:    https://github.com/anderskm/gputil
+# Copyright (c) 2017-2019 Anders Krogh Mortensen (anderskm)
+#                         [https://github.com/anderskm/gputil]
+#                    2019 Zhou Shengsheng        (ZhouShengsheng)
+#                    2020 Daniel Laguna          (labellson)
+#                    2020 Elliott Balsley        (llamafilm)
+#                    2020 Max Lv                 (madeye)
+#                    2022 Min Sheng Wu 'Vincent' (Min-Sheng)
+#                    2022 Romanin                (romanin-rf)
+#                    2023 Aaron Sheldon          (aaronsheldon)
+#                    2023 Cristian Brotto        (brottobhmg)
+#                    2024 Emanuele Ballarin      (emaballarin)
+#                         [https://github.com/emaballarin/gputil]
 #
-# LICENSE
-#
-# MIT License
-#
-# Copyright (c) 2017 anderskm
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-from .GPUtil import GPU, getGPUs, getGPUProcesses, getAvailable, getAvailability, getFirstAvailable, showUtilization, __version__
+# Licensed under the MIT License.
+# ──────────────────────────────────────────────────────────────────────────────
+from .GPUtil import __version__
+from .GPUtil import getAvailability
+from .GPUtil import getAvailable
+from .GPUtil import getFirstAvailable
+from .GPUtil import getGPUProcesses
+from .GPUtil import getGPUs
+from .GPUtil import GPU
+from .GPUtil import showUtilization
