@@ -52,7 +52,6 @@ class GPU:
         "display_active",
         "temperature",
         "vbios_version",
-        "fan_speed",
         "power_draw",
         "power_limit",
         "core_clock",
@@ -78,7 +77,6 @@ class GPU:
         core_clock,
         memory_clock,
         vbios_version,
-        fan_speed,
         power_draw,
         power_limit,
         compute_mode,
@@ -98,7 +96,6 @@ class GPU:
         self.display_active = display_active
         self.temperature = temp_gpu
         self.vbios_version = vbios_version
-        self.fan_speed = fan_speed
         self.power_draw = power_draw
         self.power_limit = power_limit
         self.core_clock = core_clock
@@ -169,7 +166,7 @@ def getGPUs() -> List[GPU]:
         p = subprocess.run(
             [
                 nvidia_smi,
-                "--query-gpu=index,uuid,utilization.gpu,memory.total,memory.used,memory.free,driver_version,name,gpu_serial,display_active,display_mode,temperature.gpu,clocks.current.graphics,clocks.current.memory,vbios_version,fan.speed,power.draw,power.limit,compute_mode,pci.bus",
+                "--query-gpu=index,uuid,utilization.gpu,memory.total,memory.used,memory.free,driver_version,name,gpu_serial,display_active,display_mode,temperature.gpu,clocks.current.graphics,clocks.current.memory,vbios_version,power.draw,power.limit,compute_mode,pci.bus",
                 "--format=csv,noheader,nounits",
             ],
             stdout=subprocess.PIPE,
@@ -204,11 +201,10 @@ def getGPUs() -> List[GPU]:
         core_clock = int(vals[12])
         memory_clock = int(vals[13])
         vbios_version = vals[14]
-        fan_speed = int(vals[15])
-        power_draw = safeFloatCast(vals[16])
-        power_limit = safeFloatCast(vals[17])
-        compute_mode = vals[18]
-        pci_bus = int(vals[19], 16)
+        power_draw = safeFloatCast(vals[15])
+        power_limit = safeFloatCast(vals[16])
+        compute_mode = vals[17]
+        pci_bus = int(vals[18], 16)
         GPUs.append(
             GPU(
                 deviceIds,
@@ -226,7 +222,6 @@ def getGPUs() -> List[GPU]:
                 core_clock,
                 memory_clock,
                 vbios_version,
-                fan_speed,
                 power_draw,
                 power_limit,
                 compute_mode,
@@ -451,14 +446,14 @@ def showUtilization(all=False, attrList=None, useOldCode=False):
     if all:
         if useOldCode:
             print(
-                " ID | Name | Serial | UUID || GPU util. | Memory util. || Memory total | Memory used | Memory free || Display mode | Display active || Core Clock | Memory Clock || Fan Speed | Power draw || Compute Mode || PCI Id"
+                " ID | Name | Serial | UUID || GPU util. | Memory util. || Memory total | Memory used | Memory free || Display mode | Display active || Core Clock | Memory Clock || Power draw || Compute Mode || PCI Id"
             )
             print(
                 "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
             )
             for gpu in GPUs:
                 print(
-                    " {0:2d} | {1:s}  | {2:s} | {3:s} || {4:3.0f}% | {5:3.0f}% || {6:.0f}MB | {7:.0f}MB | {8:.0f}MB || {9:s} | {10:s} || {11:d}Mhz | {12:d}Mhz || {13:2.0f}% | {14:2.0f}W || {15:s} || {16:o}".format(
+                    " {0:2d} | {1:s} | {2:s} | {3:s} || {4:3.0f}% | {5:3.0f}% || {6:.0f}MB | {7:.0f}MB | {8:.0f}MB || {9:s} | {10:s} || {11:d}Mhz | {12:d}Mhz || {13:2.0f}W || {14:s} || {15:X}".format(
                         gpu.id,
                         gpu.name,
                         gpu.serial,
@@ -472,7 +467,6 @@ def showUtilization(all=False, attrList=None, useOldCode=False):
                         gpu.display_active,
                         gpu.core_clock,
                         gpu.memory_clock,
-                        gpu.fan_speed,
                         gpu.power_draw,
                         gpu.compute_mode,
                         gpu.pci_bus,
@@ -538,7 +532,6 @@ def showUtilization(all=False, attrList=None, useOldCode=False):
                     {"attr": "memory_clock", "name": "Memory Clock"},
                 ],
                 [
-                    {"attr": "fan_speed", "name": "Fan Speed"},
                     {"attr": "power_draw", "name": "Power draw"},
                 ],
                 [{"attr": "compute_mode", "name": "Compute mode"}],
